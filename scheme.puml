@@ -1,0 +1,6 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+[CLIENT] -> [FRONTEND]
+[FRONTEND] -> [MIDDLE]: HTTP
+[MIDDLE] -> [BACKEND]: HTTP
+@enduml
