@@ -1,6 +1,16 @@
 @startuml
+title RawComponentDiagram
 skinparam backgroundColor #FFFFFF
-[CLIENT] -> [FRONTEND]
-[FRONTEND] -> [MIDDLE]: HTTP
-[MIDDLE] -> [BACKEND]: HTTP
+component CLIENT
+component FRONTEND
+component MIDDLE
+component BACKEND
+interface "HTTP" as proto
+CLIENT ..> MTProto : use
+MTProto - FRONTEND
+FRONTEND .> HTTP : use
+HTTP - MIDDLE
+MIDDLE .> proto : use
+proto - BACKEND
+BACKEND -u.> DataSource
 @enduml

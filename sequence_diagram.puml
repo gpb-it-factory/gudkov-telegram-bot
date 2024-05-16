@@ -1,6 +1,19 @@
 @startuml
+title DefaultFlowSequenceDiagram
 skinparam backgroundColor #FFFFFF
-[CLIENT] -> [FRONTEND]
-[FRONTEND] -> [MIDDLE]: HTTP
-[MIDDLE] -> [BACKEND]: HTTP
+actor Client as user
+participant FRONTEND as front
+participant MIDDLE as mid
+participant BACKEND as back
+database Database as db
+autonumber
+user -> front : Запрос\n/{command}
+front -> mid : HTTP
+mid -> mid : Валидация запроса
+mid -> back : HTTP
+back -> db : SQL
+db -> back : Результат запроса
+back -> mid : HTTP
+mid -> front : HTTP
+front -> user : Результат\nвыполнения запроса
 @enduml
