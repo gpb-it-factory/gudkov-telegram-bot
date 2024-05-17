@@ -3,7 +3,7 @@
 В данном репозитории представлен исходный код разрабатываемого проекта "Телеграмм-банк".
 <hr>
 
-## <div style="text-align:center;">***Содержание***</div>
+## ***Содержание***
 
 <div style="font-size: 16px">
 
@@ -17,7 +17,7 @@
 </div><hr>
 
 
-## <div style="text-align:center;">***Архитектура***</div>
+## ***Архитектура***
 Представленный проект состоит из 3 ключевых компонентов, подробнее рассмотренных ниже.
 
 ### FRONTEND (Telegram-bot на Java)
@@ -33,16 +33,17 @@
 Данный компонент занимается основными операциями, такими как: обработка транзакций, хранение данных пользователя и т.п.
 <hr>
 
-## <div style="text-align:center;"> ***UML-диаграммы***
+## ***UML-диаграммы***
 ### **Диаграмма компонентов**
-![diagram_comp](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gpb-it-factory/gudkov-telegram-bot/feature/2/component_diagram.puml)
+![diagram_comp](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gpb-it-factory/gudkov-telegram-bot/trunk/component_diagram.puml)
+
 ### **Описание диаграммы**
 Передача сообщений между клиентом и сервисом происходит с помощью используемого в Telegram протокола передачи сообщений MTProto.
 Внутри сервиса взаимодействие между компонентами осуществляется по протоколу HTTP.
 
 
 ### **Диаграмма последовательности**
-![diagram_seq](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gpb-it-factory/gudkov-telegram-bot/feature/2/sequence_diagram.puml)
+![diagram_seq](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gpb-it-factory/gudkov-telegram-bot/trunk/sequence_diagram.puml)
 ### **Описание диаграммы**
 На данной диаграмме изображен абстрактный сценарий работы клиента с сервисом. Клиент отправляет команду, сервис занимается ее обработкой и возвращает ответ.
 <hr>
