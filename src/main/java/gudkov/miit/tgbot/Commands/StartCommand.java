@@ -17,4 +17,9 @@ public class StartCommand implements Command{
         replyMessage.setText("Добро пожаловать в `GudkovTelegramBank`.");
         return replyMessage;
     }
+
+    @Override
+    public String getCommand() {
+        return "/start";
+    }
 }

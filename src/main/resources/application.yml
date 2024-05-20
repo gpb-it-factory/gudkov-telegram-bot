@@ -1,10 +1,6 @@
 spring:
     application:
         name: GudkovTelegramBot
-    datasource:
-        url: jdbc:postgresql://localhost:5432/gudkov_tgbot
-        username: postgres
-        password: postgres
 bot:
     name: GudkovTelegramBank
-    token: 6442320299:AAE_SidokgYlaxaBvlzMaYv7oGvUpfhqyLs
+    token: ${BOT_TOKEN}

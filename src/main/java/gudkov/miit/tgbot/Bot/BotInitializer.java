@@ -14,18 +14,14 @@ import java.time.LocalDateTime;
  * Bot initializing class
  */
 @Component
-public class Initializer {
+public class BotInitializer {
 
-    private static final Logger log = LoggerFactory.getLogger(Initializer.class);
+    private static final Logger log = LoggerFactory.getLogger(BotInitializer.class);
 
     private final Bot bot;
 
-    public Initializer(Bot bot){
+    public BotInitializer(Bot bot){
         this.bot = bot;
-    }
-
-    @PostConstruct
-    public void init() {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(bot);

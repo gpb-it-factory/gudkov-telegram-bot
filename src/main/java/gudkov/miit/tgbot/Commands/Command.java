@@ -7,4 +7,5 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
  */
 public interface Command {
     SendMessage reply(long chatId);
+    String getCommand();
 }
