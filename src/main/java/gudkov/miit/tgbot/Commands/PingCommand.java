@@ -18,4 +18,9 @@ public class PingCommand implements Command{
         return replyMessage;
     }
 
+    @Override
+    public String getCommand() {
+        return "/ping";
+    }
+
 }
