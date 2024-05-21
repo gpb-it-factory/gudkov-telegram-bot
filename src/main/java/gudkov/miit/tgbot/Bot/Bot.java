@@ -49,16 +49,16 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(@NonNull Update update) {
-        messageValidation(update);
+        messageTypeHandle(update);
     }
 
     /**
-     * Method that validates incoming update. Based on update's content type selects .
+     * Method that identificate update's message type. Based on update's content type selects method that handles content.
      * For now its all handled by CommandHandler but if there will be reasons to handle images - new handler will be created
      * @param update - still object from telegram passed from onUpdateReceived()
      */
 
-    private void messageValidation(@NotNull Update update){
+    private void messageTypeHandle(@NotNull Update update){
         if (update.getMessage().hasPhoto()){
             sendReply(CommandHandler.defaultPhotoMessgeResponce(update.getMessage().getChatId()));
         }

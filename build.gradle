@@ -16,10 +16,8 @@ repositories {
 }
 
 dependencies {
-    //No vulnerability if using PreferQueryMode with default setup
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'org.telegram', name: 'telegrambots', version: '6.9.0'
+    implementation 'org.telegram:telegrambots:6.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
