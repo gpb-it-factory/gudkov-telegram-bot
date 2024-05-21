@@ -29,7 +29,7 @@ public class CommandHandler {
     public SendMessage handle(Update update){
         Command replyCommand = commands.get(getCommandFromUpdate(update));
         if(replyCommand != null){
-            return replyCommand.reply(update.getMessage().getChatId());
+            return replyCommand.reply(update);
         } else {
             return defaultResponce(update.getMessage().getChatId());
         }
