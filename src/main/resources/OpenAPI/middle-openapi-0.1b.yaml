@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: GPB IT Factory Gudkov Mini-Bank API (middle)
+  version: 0.0.1
+
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: Создать нового пользователя
+      deprecated: true
+      tags: [users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '204':
+          description: Пользователь создан
+        default:
+          description: Непредвиденная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /v2/users:
+    post:
+      operationId: createUserV2
+      summary: Создать нового пользователя (v2)
+      tags: [users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequestV2'
+      responses:
+        '204':
+          description: Пользователь создан
+        default:
+          description: Непредвиденная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorV2'
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      description: Запрос на создание нового пользователя
+      deprecated: true
+      properties:
+        userId:
+          description: Идентификатор пользователя в Telegram
+          type: integer
+          format: int64
+          example: 348741706
+    CreateUserRequestV2:
+      type: object
+      description: Запрос на создание нового пользователя (V2)
+      properties:
+        userId:
+          description: Идентификатор пользователя в Telegram
+          type: integer
+          format: int64
+          example: 348741706
+        userName:
+          description: Username пользователя в Telegram
+          type: string
+          example: vrvaganov
+      required:
+        - userId
+        - userName
+    Error:
+      type: object
+      description: Формат непредвиденной ошибки
+      deprecated: true
+      properties:
+        message:
+          type: string
+          example: Произошло что-то ужасное, но станет лучше, честно
+        type:
+          type: string
+          example: GeneralError
+        code:
+          type: string
+          example: '123'
+        trace_id:
+          type: string
+          format: uuid
+          example: 5f59e024-03c7-498d-9fc9-b8b15fd49c47
+    ErrorV2:
+      type: object
+      description: Формат непредвиденной ошибки (V2)
+      properties:
+        message:
+          type: string
+          example: Произошло что-то ужасное, но станет лучше, честно
+        type:
+          type: string
+          example: GeneralError
+        code:
+          type: string
+          example: '123'
+        traceId:
+          type: string
+          format: uuid
+          example: 5f59e024-03c7-498d-9fc9-b8b15fd49c47
+      required:
+        - message
+        - type
+        - code
+        - traceId
+tags:
+  - name: users
+    description: Операции с пользователями
