@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.openapi.generator' version '7.5.0'
 }
 
 group = 'gudkov.miit'
@@ -18,10 +19,42 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.telegram:telegrambots:6.9.0'
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.20'
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
+    implementation 'io.micrometer:micrometer-core:1.12.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+
+//generates OpenAPI code into build/generated. Generates only interfaces and models
+openApiGenerate {
+    generatorName.set("spring")
+    inputSpec.set("$rootDir/src/main/resources/OpenAPI/middle-openapi-0.1b.yaml")
+    outputDir.set("$rootDir/build/generatedAPI")
+    apiPackage.set("org.openapi.example.api")
+    invokerPackage.set("org.openapi.example.invoker")
+    modelPackage.set("org.openapi.example.model")
+    configOptions.set([dateLibrary: "java8",
+                       interfaceOnly: "true",
+                       useOptional     : "true",
+                       useSpringBoot3  : "true",
+                       buildDefaultInterface : "false"])
+}
+
+sourceSets {
+    getByName("main") {
+        java {
+            srcDir("$rootDir/build/generatedAPI/src/main/java")
+        }
+    }
 }

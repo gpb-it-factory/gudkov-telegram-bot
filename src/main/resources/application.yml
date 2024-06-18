@@ -4,3 +4,8 @@ spring:
 bot:
     name: GudkovTelegramBank
     token: ${BOT_TOKEN}
+server:
+    port: 8080
+middle:
+    server:
+        url: http://localhost:8081/
