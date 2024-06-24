@@ -59,7 +59,7 @@ public class Bot extends TelegramLongPollingBot {
      */
 
     private void messageTypeHandle(@NotNull Update update){
-        if (update.getMessage().hasPhoto()){
+        if (update.getMessage().hasPhoto() && update.hasMessage()){
             sendReply(CommandHandler.defaultPhotoMessgeResponce(update.getMessage().getChatId()));
         }
         if(update.getMessage().hasText() && update.hasMessage()){

@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: GPB IT Factory Gudkov Mini-Bank API (middle)
-  version: 0.0.1
+  version: 0.0.2
 
 paths:
   /users:
@@ -46,6 +46,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorV2'
+
+  /v2/users/{id}/accounts:
+    post:
+      operationId: createUserAccountV2
+      summary: Открыть новый счёт для пользователя (V2)
+      tags: [ accounts ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 356789
+          description: Идентификатор пользователя в Telegram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequestV2'
+      responses:
+        '204':
+          description: Счёт создан
+        default:
+          description: Непредвиденная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorV2'
+
 
 components:
   schemas:
@@ -115,6 +146,17 @@ components:
         - type
         - code
         - traceId
+    CreateAccountRequestV2:
+      type: object
+      description: Запрос на создание нового счёта (V2)
+      properties:
+        accountName:
+          type: string
+          example: 'My first awesome account'
+      required:
+        - accountName
 tags:
   - name: users
     description: Операции с пользователями
+  - name: accounts
+    description: Операции со счетами пользователей
