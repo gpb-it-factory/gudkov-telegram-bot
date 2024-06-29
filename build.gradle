@@ -42,7 +42,7 @@ compileJava.dependsOn tasks.openApiGenerate
 //generates OpenAPI code into build/generated. Generates only interfaces and models
 openApiGenerate {
     generatorName.set("spring")
-    inputSpec.set("$rootDir/src/main/resources/OpenAPI/middle-openapi-0.2b.yaml")
+    inputSpec.set("$rootDir/src/main/resources/OpenAPI/backend-openapi.yaml")
     outputDir.set("$rootDir/build/generatedAPI")
     apiPackage.set("org.openapi.example.api")
     invokerPackage.set("org.openapi.example.invoker")

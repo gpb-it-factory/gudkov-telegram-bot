@@ -2,7 +2,6 @@ package gudkov.miit.tgbot.Commands;
 
 import feign.FeignException;
 import gudkov.miit.tgbot.Feign.MiddleServiceApi;
-import gudkov.miit.tgbot.Handlers.MiddleResponseHandler;
 import org.openapi.example.model.CreateAccountRequestV2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +21,9 @@ public class CreateAccountCommand implements Command{
 
     private static final Logger log = LoggerFactory.getLogger(CreateAccountCommand.class);
     private final MiddleServiceApi middleServiceApi;
-    private final MiddleResponseHandler responseHandler;
 
-    public CreateAccountCommand(MiddleServiceApi middleServiceApi,
-                                MiddleResponseHandler responseHandler){
+    public CreateAccountCommand(MiddleServiceApi middleServiceApi){
         this.middleServiceApi = middleServiceApi;
-        this.responseHandler = responseHandler;
     }
 
     @Override
@@ -36,7 +32,15 @@ public class CreateAccountCommand implements Command{
         long userId = update.getMessage().getChat().getId();
         SendMessage replyMessage = SendMessage.builder().chatId(update.getMessage().getChatId()).text("").build();
 
-        replyMessage = tryCreateAccountRequest(userId,replyMessage);
+        try {
+            CreateAccountRequestV2 createAccountRequestV2 = new CreateAccountRequestV2("My first and only awesome account");
+            middleServiceApi.createUserAccountV2(userId,createAccountRequestV2);
+            replyMessage.setText("Счет создан. Посмотрите что там.");
+        } catch (FeignException feignException){
+            log.error("CreateAccountFlow exception: {} triggered at {}. Check connection with middle.", feignException.getMessage(), LocalDateTime.now());
+            replyMessage.setText(handleMiddleCreateAccountError(feignException));
+            return replyMessage;
+        }
 
         log.info("User {} successfully created an account at {}",username, LocalDateTime.now());
         return replyMessage;
@@ -47,15 +51,14 @@ public class CreateAccountCommand implements Command{
         return "/createAccount";
     }
 
-    private SendMessage tryCreateAccountRequest(long userId, SendMessage replyMessage){
-        try {
-            CreateAccountRequestV2 createAccountRequestV2 = new CreateAccountRequestV2("My first and only awesome account");
-            replyMessage = responseHandler.handleBackendCreateAccountResponse(middleServiceApi.createUserAccountV2(userId, createAccountRequestV2),replyMessage);
-        } catch (FeignException feignException){
-            replyMessage = responseHandler.handleFeignExceptionAccountCreation(feignException,replyMessage);
-            log.error("CreateAccountFlow exception: {} triggered at {}. Check connection with middle.", feignException.getMessage(), LocalDateTime.now());
-            return replyMessage;
+
+    private String handleMiddleCreateAccountError(FeignException exception){
+        switch (exception.status()){
+            case 409:
+                return "Такой счет у данного пользователя уже есть. А зачем Вам еще?";
+            default:
+                return "Непредвиденная ошибка вышла. Попробуйте позже.";
+
         }
-        return replyMessage;
     }
 }
