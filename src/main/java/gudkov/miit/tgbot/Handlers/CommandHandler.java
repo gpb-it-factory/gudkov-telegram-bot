@@ -26,7 +26,7 @@ public class CommandHandler {
                 ));
     }
 
-    public SendMessage handle(Update update){
+    public SendMessage handle(@NotNull Update update){
         Command replyCommand = commands.get(getCommandFromUpdate(update));
         if(replyCommand != null){
             return replyCommand.reply(update);

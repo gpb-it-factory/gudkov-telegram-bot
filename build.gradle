@@ -22,6 +22,9 @@ dependencies {
     implementation 'io.swagger.core.v3:swagger-annotations:2.2.20'
     implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation('com.mashape.unirest:unirest-java:1.4.9') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
     implementation 'io.micrometer:micrometer-core:1.12.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -39,7 +42,7 @@ compileJava.dependsOn tasks.openApiGenerate
 //generates OpenAPI code into build/generated. Generates only interfaces and models
 openApiGenerate {
     generatorName.set("spring")
-    inputSpec.set("$rootDir/src/main/resources/OpenAPI/middle-openapi-0.1b.yaml")
+    inputSpec.set("$rootDir/src/main/resources/OpenAPI/backend-openapi.yaml")
     outputDir.set("$rootDir/build/generatedAPI")
     apiPackage.set("org.openapi.example.api")
     invokerPackage.set("org.openapi.example.invoker")
